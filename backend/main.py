@@ -5,25 +5,50 @@ from flask_sqlalchemy import SQLAlchemy
 from config import app, db
 from models import DataSet, GroundBuoy, GroundStation
 from datetime import datetime
-from aiModel import generate
 import json
 import random
+import time
 import os
 
-def serial_reader():
-    try:
-        ser = serial.Serial('COM3', 115200)
-        while True:
-            try:
-                data_line = ser.readline().decode('utf-8').strip()
-                process_serial_data(data_line)
-            except UnicodeDecodeError as e:
-                print(f"Decode error: {e}, skipping line...")
-    except Exception as e:
-        print(f"Serial error: {e}")
-    finally:
-        if 'ser' in locals() and ser.is_open:
-            ser.close()
+def generate_random_data():
+    while True:
+        try:
+            with app.app_context():
+                # Генерация данных для буя 1
+                current_time = datetime.now()
+                new_data = DataSet(
+                    buoy_id=1,
+                    time=current_time,
+                    height=random.uniform(100, 900),  # Высота от 0 до 40
+                    latitude=49.791284 + random.uniform(-0.001, 0.001),
+                    longitude=73.148163 + random.uniform(-0.001, 0.001),
+                    pressure=random.uniform(980, 1020),  # Давление
+                    temp=random.uniform(20, 30),  # Температура
+                    density=random.uniform(1.0, 1.5),  # Плотность
+                    ph=random.uniform(6.5, 8.5),  # pH
+                    velocity=random.uniform(0, 10),  # Скорость
+                    pitch=random.uniform(-45, 45),  # Тангаж
+                    roll=random.uniform(-45, 45),  # Крен
+                    yaw=random.uniform(0, 360)  # Рыскание
+                )
+                db.session.add(new_data)
+
+                # Генерация данных для буя 2
+                ground_data = GroundBuoy(
+                    buoy_id=2,
+                    time=current_time,
+                    above=random.uniform(0, 30),  # Уровень воды сверху
+                    under=random.uniform(0, 30)  # Уровень воды снизу
+                )
+                db.session.add(ground_data)
+                
+                db.session.commit()
+                print(f"Generated data at {current_time}")
+
+        except Exception as e:
+            print(f"Error generating data: {e}")
+        
+        time.sleep(1)  # Генерируем новые данные каждую секунду
 
 def process_serial_data(data_line):
     try:
@@ -159,28 +184,13 @@ def delete_all_data():
     except Exception as e:
         return jsonify({"message": str(e)}), 500
 
-@app.route('/predict', methods=['GET'])
-def predict_flooding():
-    try:
-        date = request.args.get('date')
-        if not date:
-            return jsonify({"message": "Date parameter is required"}), 400
-
-        predictedData, actualData, dateArray = generate(date)
-        
-        return jsonify({
-            "predict": predictedData,
-            "actual": actualData,
-            "dates": dateArray
-        }), 200
-    except Exception as e:
-        return jsonify({"message": str(e)}), 500
-
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
 
-    serial_thread = threading.Thread(target=serial_reader)
-    serial_thread.start()
+    # Запускаем генератор случайных данных вместо serial_reader
+    data_generator_thread = threading.Thread(target=generate_random_data)
+    data_generator_thread.daemon = True  # Поток завершится вместе с основной программой
+    data_generator_thread.start()
 
     app.run(debug=True)
