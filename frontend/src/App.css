@@ -1,0 +1,13 @@
+/* Скрытие содержимого до загрузки */
+body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Отключить прокрутку */
+  }
+  
+  #root {
+    visibility: hidden; /* Скрыть содержимое */
+    height: 830px;
+  }
+
+  

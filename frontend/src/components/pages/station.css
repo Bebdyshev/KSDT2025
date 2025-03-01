@@ -1,0 +1,60 @@
+.stationContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    height: 92.8vh;
+}
+
+.camera_stream {
+    width: 85%;
+    height: 100%;
+    position: relative;
+    background-color: gray;
+}
+
+.camera {
+    width: 100%;
+    height: 100%;
+}
+
+.ground_station {
+    height: 100%;
+    background-color: lightgray;
+    overflow: hidden;
+    position: relative;
+}
+
+.ground_img {
+    height: 100%;
+    width: 100%;
+    border-radius: 0px;
+}
+
+.waterAbove {
+    position: absolute;
+    z-index: 1000;
+    bottom: 0;
+    margin-bottom: 46.8vh;
+    width: 100%;
+    height: 10px;
+    background-color: rgba(0, 132, 255, 0.4); /* полупрозрачный синий цвет */
+}
+
+.waterUnder {
+    position: absolute;
+    z-index: 1000;
+    /* bottom: 0; */
+    margin-top: 46vh;
+    top: 0;
+    width: 100%;
+    height: 10px;
+    background-color: rgba(0, 132, 255, 0.4); /* полупрозрачный синий цвет */
+}
+
+span {
+    font-weight: 500;
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+}
