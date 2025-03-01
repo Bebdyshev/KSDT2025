@@ -1,18 +1,54 @@
 /* Statistics.css */
 .statistics-container {
     display: flex;
-  }
-  
-  .charts-container {
+    height: 92.7vh;
+    align-items: flex-start;
+}
+
+.content-wrapper {
+    display: flex;
+    flex: 1;
+    gap: 20px;
+}
+
+.map-container {
+    width: 55%;
+}
+
+.charts-container {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Two columns */
-    width: 40%; /* Adjust this value to reduce the width of the charts container */
-  }
+    grid-template-columns: repeat(2, 1fr);
+    width: 40%;
+}
 
-  .chart-container {
-    width: 315px;
+.chart-container {
+    width: 250px;
     margin: 25px;
-    height: 190px; /* Adjust as needed */
-  }
+    height: 190px;
+}
 
+.balloon-container {
+    position: relative;
+    width: 100px;
+    height: 100%;
+}
+
+.balloon_img {
+    position: absolute;
+    width: 80px;
+    height: auto;
+    transition: bottom 0.5s ease;
+}
+
+.rocket-container {
+    width: 100px;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.rocket_img {
+    width: 175px;
+    height: 100%;
+}
   

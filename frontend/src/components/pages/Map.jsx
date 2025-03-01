@@ -81,7 +81,7 @@ function BuoyMap() {
       <MapContainer 
         center={[50.276754, 57.131794]} 
         zoom={16} 
-        style={{ height: '90vh', width: '90vh', margin: '12px', borderRadius: '5px' }} 
+        style={{ height: '87vh', width: '87vh', margin: '12px', borderRadius: '5px' }} 
         whenCreated={mapInstance => { mapRef.current = mapInstance }}>
         <TileLayer
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

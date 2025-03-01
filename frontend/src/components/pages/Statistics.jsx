@@ -17,6 +17,7 @@ function Statistics() {
         <BuoyChart label="Pressure" dataY="pressure" rgb="rgba(255, 206, 86, 1)" />
         <BuoyChart label="Velocity" dataY="velocity" rgb="rgb(40, 167, 69)" />
       </div>
+      <img src="/images/rocket.png" alt="Rocket" className='rocket_img' />
     </div>
   );
 }
